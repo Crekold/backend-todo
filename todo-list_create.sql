@@ -11,7 +11,7 @@ CREATE TABLE etiquetas (
 
 -- Table: tasks
 CREATE TABLE tasks (
-    id_task varchar(6)  NOT NULL,
+    id_task int  NOT NULL,
     name_task varchar(200)  NOT NULL,
     due_date date  NOT NULL,
     status varchar(30)  NOT NULL,

@@ -38,7 +38,7 @@ public class ToDoController {
     @PostMapping
 public ResponseEntity<?> createTask(@RequestBody ToDo newTask) {
     // Realiza las validaciones necesarias
-    if (newTask.getName_task() == null || newTask.getName_task().isEmpty()) {
+    if (newTask.getNameTask() == null || newTask.getNameTask().isEmpty()) {
         ErrorResponse error = new ErrorResponse("El nombre de la tarea es obligatorio", HttpStatus.BAD_REQUEST.value());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }

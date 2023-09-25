@@ -36,7 +36,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
         }
         User savedUser = userRepository.save(newUser);
-        return ResponseEntity.ok(savedUser);
+        return ResponseEntity.ok("creacion de usuario exitosa");
     }
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User user) {
