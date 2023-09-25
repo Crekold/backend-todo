@@ -25,15 +25,20 @@ public class ToDoController {
         return ResponseEntity.ok(taskList);
     }
 
-    @GetMapping("/{taskId}")
-    public ResponseEntity<ToDo> getTaskById(@PathVariable int taskId) {
-        Optional<ToDo> task = toDoRepository.findByTaskId(taskId);
-        if (task.isPresent()) {
-            return ResponseEntity.ok(task.get());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+   @GetMapping("/{taskId}")
+public ResponseEntity<?> getTaskById(@PathVariable int taskId) {
+    // Busca la tarea en la base de datos
+    Optional<ToDo> optionalTask = toDoRepository.findById(taskId);
+
+    // Verifica si la tarea existe
+    if (optionalTask.isPresent()) {
+        ToDo task = optionalTask.get();
+        return ResponseEntity.ok(task);
+    } else {
+        return ResponseEntity.notFound().build();
     }
+
+}
 
     @PostMapping
 public ResponseEntity<?> createTask(@RequestBody ToDo newTask) {
@@ -53,7 +58,7 @@ public ResponseEntity<?> createTask(@RequestBody ToDo newTask) {
     return ResponseEntity.ok(savedTask);
 }
 @PutMapping("/{taskId}")
-public ResponseEntity<?> updateTask(@PathVariable Long taskId, @RequestBody ToDo updatedTask) {
+public ResponseEntity<?> updateTask(@PathVariable int taskId, @RequestBody ToDo updatedTask) {
     // Busca la tarea en la base de datos
     Optional<ToDo> optionalTask = toDoRepository.findById(taskId);
 
@@ -74,7 +79,7 @@ public ResponseEntity<?> updateTask(@PathVariable Long taskId, @RequestBody ToDo
 }
 
     @DeleteMapping("/{taskId}")
-    public ResponseEntity<String> deleteTask(@PathVariable Long taskId) {
+    public ResponseEntity<String> deleteTask(@PathVariable int taskId) {
         // Elimina la tarea de la base de datos si existe
         if (toDoRepository.existsById(taskId)) {
             toDoRepository.deleteById(taskId);
