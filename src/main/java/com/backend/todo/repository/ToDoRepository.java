@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ToDoRepository extends CrudRepository<ToDo, Long> {
-    Optional<ToDo> findByTaskId(Long taskId);
+    Optional<ToDo> findByTaskId(int taskId);
 }

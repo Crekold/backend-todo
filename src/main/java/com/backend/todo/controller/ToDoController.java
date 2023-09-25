@@ -26,7 +26,7 @@ public class ToDoController {
     }
 
     @GetMapping("/{taskId}")
-    public ResponseEntity<ToDo> getTaskById(@PathVariable Long taskId) {
+    public ResponseEntity<ToDo> getTaskById(@PathVariable int taskId) {
         Optional<ToDo> task = toDoRepository.findByTaskId(taskId);
         if (task.isPresent()) {
             return ResponseEntity.ok(task.get());
