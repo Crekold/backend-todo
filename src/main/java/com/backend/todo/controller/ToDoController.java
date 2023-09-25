@@ -52,7 +52,26 @@ public ResponseEntity<?> createTask(@RequestBody ToDo newTask) {
 
     return ResponseEntity.ok(savedTask);
 }
+@PutMapping("/{taskId}")
+public ResponseEntity<?> updateTask(@PathVariable Long taskId, @RequestBody ToDo updatedTask) {
+    // Busca la tarea en la base de datos
+    Optional<ToDo> optionalTask = toDoRepository.findById(taskId);
 
+    // Verifica si la tarea existe
+    if (optionalTask.isPresent()) {
+        ToDo task = optionalTask.get();
+
+        // Actualiza el estado de la tarea con el nuevo estado
+        task.setStatus(updatedTask.getStatus());
+
+        // Guarda la tarea actualizada en la base de datos
+        ToDo savedTask = toDoRepository.save(task);
+
+        return ResponseEntity.ok(savedTask);
+    } else {
+        return ResponseEntity.notFound().build();
+    }
+}
 
     @DeleteMapping("/{taskId}")
     public ResponseEntity<String> deleteTask(@PathVariable Long taskId) {
