@@ -44,11 +44,11 @@ public ResponseEntity<?> getTaskById(@PathVariable int taskId) {
 public ResponseEntity<?> createTask(@RequestBody ToDo newTask) {
     // Realiza las validaciones necesarias
     if (newTask.getNameTask() == null || newTask.getNameTask().isEmpty()) {
-        ErrorResponse error = new ErrorResponse("El nombre de la tarea es obligatorio", HttpStatus.BAD_REQUEST.value());
+        ErrorResponse error = new ErrorResponse("ERR1","El nombre de la tarea es obligatorio", HttpStatus.BAD_REQUEST.value());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
     if (newTask.getDueDate() == null) {
-        ErrorResponse error = new ErrorResponse("La fecha de vencimiento es obligatoria", HttpStatus.BAD_REQUEST.value());
+        ErrorResponse error = new ErrorResponse("ERR1","La fecha de vencimiento es obligatoria", HttpStatus.BAD_REQUEST.value());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
@@ -75,6 +75,18 @@ public ResponseEntity<?> updateTask(@PathVariable int taskId, @RequestBody ToDo 
         return ResponseEntity.ok(savedTask);
     } else {
         return ResponseEntity.notFound().build();
+    }
+}
+@GetMapping("/user/{userId}")
+public ResponseEntity<List<ToDo>> getTasksByUserId(@PathVariable int userId) {
+    // Busca las tareas en la base de datos que correspondan al usuario
+    List<ToDo> tasksByUserId = toDoRepository.findByUserId(userId);
+
+    // Verifica si se encontraron tareas
+    if (tasksByUserId.isEmpty()) {
+        return ResponseEntity.notFound().build();
+    } else {
+        return ResponseEntity.ok(tasksByUserId);
     }
 }
 

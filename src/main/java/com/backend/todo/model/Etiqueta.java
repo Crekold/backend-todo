@@ -13,12 +13,16 @@ public class Etiqueta {
     @Column(name = "etiqueta", length = 100, nullable = false)
     private String etiqueta;
 
+    @Column(name = "users_id_user", nullable = false)
+    private int idUsuario;
+
     public Etiqueta() {
     }
 
-    public Etiqueta(int idEtiqueta, String etiqueta) {
+    public Etiqueta(int idEtiqueta, String etiqueta, int idUsuario) {
         this.idEtiqueta = idEtiqueta;
         this.etiqueta = etiqueta;
+        this.idUsuario = idUsuario;
     }
 
     public int getIdEtiqueta() {
@@ -35,5 +39,11 @@ public class Etiqueta {
 
     public void setEtiqueta(String etiqueta) {
         this.etiqueta = etiqueta;
+    }
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 }
