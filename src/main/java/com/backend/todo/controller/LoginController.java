@@ -37,6 +37,6 @@ public class LoginController {
             ErrorResponse error = new ErrorResponse("ERR3","La contraseña es incorrecta", HttpStatus.BAD_REQUEST.value());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
         }
-        return ResponseEntity.ok("Login exitoso");
+        return ResponseEntity.ok(user.getUserId());
     }
 }

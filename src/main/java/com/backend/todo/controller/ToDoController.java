@@ -59,13 +59,20 @@ public ResponseEntity<?> createTask(@RequestBody ToDo newTask) {
 }
 @PutMapping("/{taskId}")
 public ResponseEntity<?> updateTask(@PathVariable int taskId, @RequestBody ToDo updatedTask) {
+    // Verifica si el objeto updatedTask es nulo
+    if (updatedTask == null) {
+        // Devuelve un mensaje de error
+        ErrorResponse errorResponse = new ErrorResponse("ERR701", "El objeto updatedTask es nulo", HttpStatus.BAD_REQUEST.value());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+
     // Busca la tarea en la base de datos
     Optional<ToDo> optionalTask = toDoRepository.findById(taskId);
 
     // Verifica si la tarea existe
     if (optionalTask.isPresent()) {
         ToDo task = optionalTask.get();
-
+        
         // Actualiza el estado de la tarea con el nuevo estado
         task.setStatus(updatedTask.getStatus());
 
@@ -74,7 +81,9 @@ public ResponseEntity<?> updateTask(@PathVariable int taskId, @RequestBody ToDo 
 
         return ResponseEntity.ok(savedTask);
     } else {
-        return ResponseEntity.notFound().build();
+        // Devuelve un mensaje de error
+        ErrorResponse errorResponse = new ErrorResponse("ERR700", "La tarea con el ID " + taskId + " no existe", HttpStatus.NOT_FOUND.value());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
 }
 @GetMapping("/user/{userId}")
