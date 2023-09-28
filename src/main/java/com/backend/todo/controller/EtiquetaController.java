@@ -1,5 +1,6 @@
 package com.backend.todo.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,6 +37,16 @@ public class EtiquetaController {
         List<Etiqueta> etiquetaList = etiquetaService.getAllEtiquetas();
         return ResponseEntity.ok(etiquetaList);
     }
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Etiqueta>> getAllEtiquetasByUserId(@PathVariable Integer userId) {
+        logger.info("GET request received for getAllEtiquetasByUserId");
+        List<Etiqueta> etiquetaList = etiquetaService.getEtiquetabyuserid(userId);
+        if (etiquetaList.isEmpty()) {
+            logger.warning("Etiquetas not found with userId: " + userId);
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(etiquetaList);
+    }
 
     @PostMapping
     public ResponseEntity<?> createEtiqueta(@RequestBody Etiqueta newEtiqueta) {
@@ -50,24 +61,32 @@ public class EtiquetaController {
 
         Etiqueta savedEtiqueta = etiquetaService.createEtiqueta(newEtiqueta);
         logger.info("Etiqueta created successfully");
-        return ResponseEntity.ok(savedEtiqueta);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedEtiqueta);
     }
 
-    @PutMapping
-    public ResponseEntity<?> updateEtiqueta(@RequestBody Etiqueta updatedEtiqueta) {
-        logger.info("PUT request received for updateEtiqueta");
-
-        // Validar la etiqueta
-        ErrorResponse validationError = etiquetaValidationService.validateEtiqueta(updatedEtiqueta);
+    @PutMapping("/{etiquetaId}")
+    public ResponseEntity<?> updateEtiqueta(@PathVariable int etiquetaId, @RequestBody Etiqueta updatedEtiqueta) {
+        logger.info("PUT request received for updateEtiqueta with etiquetaId: " + etiquetaId);
+    
+        // Validar la etiqueta usando el servicio de validación
+        ErrorResponse validationError = etiquetaValidationService.validateEtiquetaForUpdate(etiquetaId, updatedEtiqueta);
         if (validationError != null) {
             logger.warning("Invalid request received for updateEtiqueta");
             return ResponseEntity.badRequest().body(validationError);
         }
-
-        Etiqueta savedEtiqueta = etiquetaService.updateEtiqueta(updatedEtiqueta);
-        logger.info("Etiqueta updated successfully");
-        return ResponseEntity.ok(savedEtiqueta);
+    
+        Etiqueta savedEtiqueta = etiquetaService.updateEtiqueta(etiquetaId, updatedEtiqueta);
+        if (savedEtiqueta != null) {
+            logger.info("Etiqueta updated successfully");
+            return ResponseEntity.ok(savedEtiqueta);
+        } else {
+            logger.warning("Etiqueta not found with etiquetaId: " + etiquetaId);
+            ErrorResponse errorResponse = new ErrorResponse("ERR2", "La etiqueta con el ID " + etiquetaId + " no existe", HttpStatus.NOT_FOUND.value());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+        }
     }
+    
+
     @DeleteMapping("/{etiquetaId}")
     public ResponseEntity<?> deleteEtiqueta(@PathVariable Integer etiquetaId) {
         logger.info("DELETE request received for deleteEtiqueta");
