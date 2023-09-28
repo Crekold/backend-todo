@@ -49,6 +49,8 @@ El backend proporciona una API RESTful que admite las siguientes operaciones:
 * Obtener una tarea por su ID
 * Actualizar una tarea
 * Eliminar una tarea
+* Creacion, obtencion, modificacion y eliminacion de etiquetas
+* Sistema de usuarios con login
 
 Puedes interactuar con la API utilizando herramientas como Postman o cURL.
 
