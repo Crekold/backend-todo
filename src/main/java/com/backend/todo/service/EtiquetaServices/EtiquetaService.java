@@ -1,4 +1,4 @@
-package com.backend.todo.service;
+package com.backend.todo.service.EtiquetaServices;
 
 import java.util.List;
 

@@ -5,8 +5,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.backend.todo.service.UserService;
-import com.backend.todo.service.UserValidationService;
+
+import com.backend.todo.service.UserServices.UserService;
+import com.backend.todo.service.UserServices.UserValidationService;
 import com.backend.todo.model.ErrorResponse;
 import com.backend.todo.model.User;
 import java.util.List;

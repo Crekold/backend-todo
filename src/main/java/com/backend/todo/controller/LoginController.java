@@ -10,8 +10,9 @@ import com.backend.todo.model.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
-import com.backend.todo.service.LoginValidationService;
-import com.backend.todo.service.LoginService;
+
+import com.backend.todo.service.LoginServices.LoginService;
+import com.backend.todo.service.LoginServices.LoginValidationService;
 @RestController
 @RequestMapping("/api/v1/login")
 public class LoginController {

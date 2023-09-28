@@ -1,4 +1,4 @@
-package com.backend.todo.service;
+package com.backend.todo.service.EtiquetaServices;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

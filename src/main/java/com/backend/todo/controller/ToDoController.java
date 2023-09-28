@@ -9,8 +9,9 @@ import java.util.logging.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.backend.todo.service.ToDoValidationService;
-import com.backend.todo.service.TaskService;
+
+import com.backend.todo.service.ToDoServices.TaskService;
+import com.backend.todo.service.ToDoServices.ToDoValidationService;
 
 @RestController
 @RequestMapping("/api/v1/task")

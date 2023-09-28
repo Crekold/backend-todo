@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.logging.Logger;
 import com.backend.todo.model.ErrorResponse;
 import com.backend.todo.model.Etiqueta;
-import com.backend.todo.service.EtiquetaValidationService;
-import com.backend.todo.service.EtiquetaService;
+import com.backend.todo.service.EtiquetaServices.EtiquetaService;
+import com.backend.todo.service.EtiquetaServices.EtiquetaValidationService;
 @RestController
 @RequestMapping("/api/v1/etiqueta")
 public class EtiquetaController {
