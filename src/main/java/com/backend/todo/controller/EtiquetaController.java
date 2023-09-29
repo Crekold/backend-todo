@@ -10,6 +10,7 @@ import com.backend.todo.model.ErrorResponse;
 import com.backend.todo.model.Etiqueta;
 import com.backend.todo.service.EtiquetaServices.EtiquetaService;
 import com.backend.todo.service.EtiquetaServices.EtiquetaValidationService;
+@CrossOrigin(origins = "*, maxAge = 3600")
 @RestController
 @RequestMapping("/api/v1/etiqueta")
 public class EtiquetaController {

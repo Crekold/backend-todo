@@ -8,4 +8,5 @@ import java.util.List;
 public interface EtiquetaRepository extends JpaRepository<Etiqueta, Integer>{
     public List<Etiqueta> findByEtiqueta(String etiqueta);
     public List<Etiqueta> findByIdUsuario(int idUsuario);
+    
 }

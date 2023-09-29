@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import com.backend.todo.service.ToDoServices.TaskService;
 import com.backend.todo.service.ToDoServices.ToDoValidationService;
 
+@CrossOrigin(origins = "*, maxAge = 3600")
 @RestController
 @RequestMapping("/api/v1/task")
 public class ToDoController {

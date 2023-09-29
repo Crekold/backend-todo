@@ -1,5 +1,6 @@
 package com.backend.todo.controller;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.backend.todo.service.LoginServices.LoginService;
 import com.backend.todo.service.LoginServices.LoginValidationService;
+@CrossOrigin(origins = "*, maxAge = 3600")
 @RestController
 @RequestMapping("/api/v1/login")
 public class LoginController {
