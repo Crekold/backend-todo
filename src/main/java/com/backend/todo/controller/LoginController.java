@@ -42,5 +42,3 @@ public class LoginController {
         return loginService.login(user);
     }
 }
-
-

@@ -30,6 +30,6 @@ public class LoginService {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
         }
 
-        return ResponseEntity.ok("login exitoso");
+        return ResponseEntity.ok(1 +", "+savedUser.getUserId());
     }
 }
