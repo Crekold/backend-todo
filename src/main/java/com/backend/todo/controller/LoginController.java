@@ -1,44 +1,38 @@
 package com.backend.todo.controller;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+
+import com.backend.todo.model.User;
+import com.backend.todo.service.LoginServices.LoginService;
+
 import java.util.logging.Logger;
 
-import com.backend.todo.model.ErrorResponse;
-import com.backend.todo.model.User;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import com.backend.todo.service.LoginServices.LoginService;
-import com.backend.todo.service.LoginServices.LoginValidationService;
-@CrossOrigin(origins = "*, maxAge = 3600")
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/v1/login")
 public class LoginController {
-    private final LoginValidationService loginValidationService;
-    private final LoginService loginService;
-    private final Logger logger = Logger.getLogger(LoginController.class.getName()); // Nombre de la clase como identificador del logger
 
-    public LoginController(LoginValidationService loginValidationService, LoginService loginService) {
-        this.loginValidationService = loginValidationService;
+    private final LoginService loginService;
+    private final Logger logger = Logger.getLogger(LoginController.class.getName());
+
+    public LoginController(LoginService loginService) {
         this.loginService = loginService;
     }
 
     @PostMapping
-    public ResponseEntity<?> login(@RequestBody User user) {
-        logger.info("POST request received for login");
+    public ResponseEntity<?> login(@RequestBody final User user) {
+        logger.info("POST request received for login for user: " + user.getUsername());
 
-        // Realizar validaciones de inicio de sesión
-        ErrorResponse validationError = loginValidationService.validateLogin(user);
-        if (validationError != null) {
-            logger.warning("Login validation failed");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(validationError);
+        // Login validations
+        ResponseEntity<?> response = loginService.login(user);
+        
+        if (!response.getStatusCode().is2xxSuccessful()) {
+            logger.warning("Login failed for user: " + user.getUsername());
+        } else {
+            logger.info("Login successful for user: " + user.getUsername());
         }
 
-        logger.info("Login validation successful");
-        return loginService.login(user);
+        return response;
     }
 }
